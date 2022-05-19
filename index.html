@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="html2pdf.bundle.min.js"></script>
+    <title>Document</title>
+    <style>
+        body {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* others */
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .content2 {
+            display: flex;
+        }
+
+        input {
+            border: none;
+        }
+
+        .but {
+            text-align: right;
+        }
+
+        #download {
+            color: white;
+            font-size: 20px;
+            background-color: rgb(26, 137, 211);
+            padding: 10px;
+            margin: 10px;
+            margin-right: 0px;
+            border-radius: 5px;
+        }
+
+        /* logo */
+        .title-down {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 0;
+            font-family: sans-serif;
+            font-weight: bold;
+            color: rgb(255, 153, 0);
+            font-size: 1.5rem;
+        }
+
+        .logo {
+            height: 150px;
+            width: 150px;
+        }
+
+        /* hiding number input arrow */
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="but">
+        <button class="btn btn-primary" id="download">download pdf</button>
+    </div>
+
+    <div class="page">
+        <div class="content">
+            <img src="logo.svg" alt="" class="logo" />
+            <p class="title-down">Namana Medical Centre</p>
+        </div>
+        <hr />
+        <center>
+            <h2> AMBULATORY BLOOD PRESSURE MONITERING</h2>
+        </center>
+        <div class="content2">
+            <p><b>DATE:</b></p>
+            <P id="date"></P>
+        </div>
+        <table style="border:none;">
+            <tr style="border:none;">
+                <td style="border:none;"><b>REFRENCE:</b></td>
+                <td style="border:none;"><input placeholder="ENTER REFRENCE" type="text" /></td>
+            </tr>
+        </table>
+        <div>
+            <div>
+                <p><b><u> PATIENT DETAILS</b></u>:-</p>
+                <table>
+                    <tr>
+                        <td style="width: 150px"><b>NAME</b></td>
+                        <td><input type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td><b>AGE</b></td>
+                        <td><input placeholder="0" type="number" id="quantity" name="quantity" min="1" max="150"></td>
+                    </tr>
+                    <tr>
+                        <td><b>SEX</b></td>
+                        <td>
+                            <select
+                                style=" width: 100%; background-color: white; border: none; -webkit-appearance: none;"
+                                name="sex" id="sex">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+
+            </div>
+        </div>
+
+        <br />
+        <p> <b> <u> INTERPRETATION</u></b>:-</p>
+        <textarea placeholder="ENTER THE TEXT" name="inter" id="" cols="50" rows="3"
+            style="border: none; resize: none;"></textarea>
+        <br />
+
+        <p> <b> <u> ANALYSIS</u></b>:-</p>
+        <div>
+            <table class="time">
+                <tr>
+                    <td style="width: 50px;"><b>Sl NO.</b></td>
+                    <td style="text-align:center;"> <b>Description</b> </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> <b>1</b> </td>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> <b>2</b> </td>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> <b>3</b> </td>
+                    <td><input type="text" /></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"> <b>4</b> </td>
+                    <td><input type="text" /></td>
+                </tr>
+            </table>
+        </div>
+
+        <p> <b> <u> IMPRESSION</u></b>:-</p>
+        <textarea placeholder="ENTER THE TEXT" name="impression" id="" cols="50" rows="3"
+            style="border: none; resize: none;"></textarea> <br />
+        <p> <b> <u> SIGNATURE OF CARDIOLOGIST</u></b>:-</p>
+        <br>
+    </div>
+</body>
+
+<script>
+
+    /////////////////////////// download as pdf ///////////////////////////////////
+    window.onload = function () {
+        document.getElementById("download").addEventListener("click", () => {
+            const invoice = this.document.querySelector(".page");
+            console.log(invoice);
+            console.log(window);
+            var opt = {
+                margin: 0.2,
+                filename: "myfile.pdf",
+                image: { type: "jpeg", quality: 1 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: "in", format: "A4", orientation: "portrait" },
+                //hide: document.getElementById("hiderow").style.display = "none"
+            };
+            html2pdf().from(invoice).set(opt).save();
+        });
+    };
+
+    //////////////////////////// others /////////////////////////
+    var today = new Date();
+
+    var date = today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear();
+    document.getElementById('date').innerHTML = date;
+
+</script>
+
+</html>
